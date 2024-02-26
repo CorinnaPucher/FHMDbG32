@@ -39,11 +39,15 @@ public class Movie {
         List<Genre> genres = new ArrayList<>();
         Collections.addAll(genres, Genre.ACTION, Genre.ADVENTURE);
 
-        movies.add(new Movie("Mew", "This is a movie , mew",genres));
+        movies.add(new Movie("Mew", "This is a catty movie , mew",genres));
 
         genres = new ArrayList<>();
-        Collections.addAll(genres, Genre.ACTION);
-        movies.add(new Movie("Camonna Tong", "Look at me",genres));
+        Collections.addAll(genres, Genre.DOCUMENTARY);
+        movies.add(new Movie("Camonna Tong", "Look at me. You may not like it but this is how a free guy looks like.",genres));
+
+        genres = new ArrayList<>();
+        Collections.addAll(genres, Genre.CRIME, Genre.DRAMA);
+        movies.add(new Movie("Simba und die Blume", "Dangerous cat eating flowers",genres));
 
         return movies;
     }
