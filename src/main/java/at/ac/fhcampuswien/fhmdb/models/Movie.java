@@ -1,11 +1,8 @@
 package at.ac.fhcampuswien.fhmdb.models;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
-public class Movie {
+public class Movie implements Comparable<Movie> {
     private String title;
     private String description;
     private List<Genre> genres;
@@ -29,26 +26,56 @@ public class Movie {
         for (Genre genres : genres) {
             stringBuilder.append(genres + ", ");
         }
-        stringBuilder.delete(stringBuilder.length() -2, stringBuilder.length() - 1);
+        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length() - 1);
         return stringBuilder.toString();
     }
 
-    public static List<Movie> initializeMovies(){
+    public static List<Movie> initializeMovies() {
         List<Movie> movies = new ArrayList<>();
 
         List<Genre> genres = new ArrayList<>();
         Collections.addAll(genres, Genre.ACTION, Genre.ADVENTURE);
 
-        movies.add(new Movie("Mew", "This is a catty movie , mew",genres));
+        movies.add(new Movie("Mew", "This is a catty movie , mew", genres));
 
         genres = new ArrayList<>();
         Collections.addAll(genres, Genre.DOCUMENTARY);
-        movies.add(new Movie("Camonna Tong", "Look at me. You may not like it but this is how a free guy looks like.",genres));
+        movies.add(new Movie("Camonna Tong", "Look at me. You may not like it but this is how a free guy looks like.", genres));
 
         genres = new ArrayList<>();
         Collections.addAll(genres, Genre.CRIME, Genre.DRAMA);
-        movies.add(new Movie("Simba und die Blume", "Dangerous cat eating flowers",genres));
+        movies.add(new Movie("Simba und die Blume", "Dangerous cat eating flowers", genres));
+
+        genres = new ArrayList<>();
+        Collections.addAll(genres, Genre.CRIME, Genre.DRAMA);
+        movies.add(new Movie("Ein Esel", "Dangerous cat eating flowers", genres));
+
+        genres = new ArrayList<>();
+        Collections.addAll(genres, Genre.CRIME, Genre.DRAMA);
+        movies.add(new Movie("Eine Irgendwas", "Dangerous cat eating flowers", genres));
 
         return movies;
+    }
+
+    @Override
+    public int compareTo(Movie o) {
+        int shortestLength = Math.min(o.getTitle().length(), getTitle().length());
+        for (int i = 0; i < shortestLength; i++) {
+            if (Character.toLowerCase(getTitle().charAt(i)) > Character.toLowerCase(o.getTitle().charAt(i))) {
+                // Defines the sorting priority (title 1 comes after title 2)
+                return 1;
+            } else if (Character.toLowerCase(getTitle().charAt(i)) < Character.toLowerCase(o.getTitle().charAt(i))) {
+                // Defines the sorting priority (title 1 comes before title 2)
+                return -1;
+            }
+        }
+        return 0;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Movie m = (Movie) obj;
+        if(m.getTitle().equals(this.getTitle())) return true;
+        return super.equals(obj);
     }
 }
