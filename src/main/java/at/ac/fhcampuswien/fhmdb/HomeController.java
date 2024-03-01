@@ -73,7 +73,16 @@ public class HomeController implements Initializable {
             observableMovies.clear();
             for (int i = 0; i < allMovies.size(); i++) {
                 Movie m = allMovies.get(i);
-                if (m.getTitle().toLowerCase().contains(searchValue) || m.getDescription().toLowerCase().contains(searchValue)) {
+                Genre topG = (Genre)genreComboBox.getValue();
+                boolean genreEqual;
+                boolean titleEqual = m.getTitle().toLowerCase().contains(searchValue);
+                boolean descriptionEqual = m.getDescription().toLowerCase().contains(searchValue);
+                if(topG == null){
+                    genreEqual = true;
+                }
+                else genreEqual = m.getGenres().contains(topG.toString());
+
+                if ((titleEqual || descriptionEqual) && genreEqual) {
                     observableMovies.add(m);
                 }
             }
