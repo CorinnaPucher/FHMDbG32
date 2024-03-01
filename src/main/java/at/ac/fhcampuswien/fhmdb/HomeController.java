@@ -6,6 +6,7 @@ import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,6 +14,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -51,17 +54,29 @@ public class HomeController implements Initializable {
         // TODO add event handlers to buttons and call the regarding methods
         // either set event handlers in the fxml file (onAction) or add them here
 
-        // Sort button example:
+        // Sort button:
         sortBtn.setOnAction(actionEvent -> {
             if(sortBtn.getText().equals("Sort (asc)")) {
-                // TODO sort observableMovies ascending
+                // sort observableMovies ascending
+                Collections.sort(observableMovies);
                 sortBtn.setText("Sort (desc)");
             } else {
-                // TODO sort observableMovies descending
+                // sort observableMovies descending
+                Collections.reverse(observableMovies);
                 sortBtn.setText("Sort (asc)");
             }
         });
 
-
+        // Filter button:
+        searchBtn.setOnAction(actionEvent -> {
+            String searchValue = searchField.getText().toLowerCase();
+            observableMovies.clear();
+            for (int i = 0; i < allMovies.size(); i++) {
+                Movie m = allMovies.get(i);
+                if (m.getTitle().toLowerCase().contains(searchValue) || m.getDescription().toLowerCase().contains(searchValue)) {
+                    observableMovies.add(m);
+                }
+            }
+        });
     }
 }
