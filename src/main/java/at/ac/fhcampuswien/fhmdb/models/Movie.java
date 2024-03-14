@@ -1,5 +1,7 @@
 package at.ac.fhcampuswien.fhmdb.models;
 
+import at.ac.fhcampuswien.fhmdb.JSONAction;
+
 import java.util.*;
 
 public class Movie implements Comparable<Movie> {
@@ -31,9 +33,11 @@ public class Movie implements Comparable<Movie> {
     }
 
     public static List<Movie> initializeMovies() {
-        List<Movie> movies = new ArrayList<>();
 
-        List<Genre> genres = new ArrayList<>();
+        List<Movie> movies = JSONAction.readJsonFile("./movie.json");
+
+
+        /*List<Genre> genres = new ArrayList<>();
         Collections.addAll(genres, Genre.ACTION, Genre.ADVENTURE);
 
         movies.add(new Movie("Mew", "This is a catty movie , mew", genres));
@@ -52,7 +56,7 @@ public class Movie implements Comparable<Movie> {
 
         genres = new ArrayList<>();
         Collections.addAll(genres, Genre.CRIME, Genre.DRAMA);
-        movies.add(new Movie("Eine Irgendwas", "Dangerous cat eating flowers", genres));
+        movies.add(new Movie("Eine Irgendwas", "Dangerous cat eating flowers", genres));*/
 
         return movies;
     }

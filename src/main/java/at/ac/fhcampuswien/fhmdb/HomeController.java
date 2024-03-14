@@ -51,7 +51,7 @@ public class HomeController implements Initializable {
         genreComboBox.getItems().addAll(Genre.values());
         genreComboBox.setPromptText("Filter by Genre");
 
-        // TODO add event handlers to buttons and call the regarding methods
+        // add event handlers to buttons and call the regarding methods
         // either set event handlers in the fxml file (onAction) or add them here
 
         // Sort button:
@@ -69,23 +69,23 @@ public class HomeController implements Initializable {
 
         // Filter button:
         searchBtn.setOnAction(actionEvent -> {
-            String searchValue = searchField.getText().toLowerCase();
-            observableMovies.clear();
-            for (int i = 0; i < allMovies.size(); i++) {
-                Movie m = allMovies.get(i);
-                Genre topG = (Genre)genreComboBox.getValue();
-                boolean genreEqual;
-                boolean titleEqual = m.getTitle().toLowerCase().contains(searchValue);
-                boolean descriptionEqual = m.getDescription().toLowerCase().contains(searchValue);
-                if(topG == null){
-                    genreEqual = true;
-                }
-                else genreEqual = m.getGenres().contains(topG.toString());
-
-                if ((titleEqual || descriptionEqual) && genreEqual) {
-                    observableMovies.add(m);
-                }
-            }
+            filter(searchField.getText().toLowerCase(), (Genre) genreComboBox.getValue(), observableMovies, allMovies);
         });
+    }
+    public static void filter (String searchValue, Genre genre, List<Movie> observableMovies, List<Movie> allMovies) {
+        observableMovies.clear();
+        for (int i = 0; i < allMovies.size(); i++) {
+            Movie m = allMovies.get(i);
+            boolean genreEqual;
+            boolean titleEqual = m.getTitle().toLowerCase().contains(searchValue);
+            boolean descriptionEqual = m.getDescription().toLowerCase().contains(searchValue);
+            if (genre == null) {
+                genreEqual = true;
+            } else genreEqual = m.getGenres().contains(genre.toString());
+
+            if ((titleEqual || descriptionEqual) && genreEqual) {
+                observableMovies.add(m);
+            }
+        }
     }
 }
